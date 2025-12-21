@@ -7,8 +7,7 @@ import {
 } from "../../data/cart.js";
 import { products, getProduct} from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import { deliveryOptions , getDeliverOption} from "../../data/deliveryOptions.js";
-import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+import { deliveryOptions , getDeliverOption, calculateDeliveryDate} from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
@@ -24,9 +23,7 @@ export function renderOrderSummary() {
     const deliverOption = getDeliverOption(delioptionId);
     
 
-    const today = dayjs();
-    const deliverDate = today.add(deliverOption.deliverDays, "days");
-    const dateString = deliverDate.format("dddd, MMMM D");
+    const dateString = calculateDeliveryDate(deliverOption);
 
     cartSummaryHtml += `
         <div class="cart-item-container js-cart-item-container-${
@@ -86,9 +83,9 @@ export function renderOrderSummary() {
   function deliverOptionHtml(matchingProduct, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliOption) => {
-      const today = dayjs();
-      const deliverDate = today.add(deliOption.deliverDays, "days");
-      const dateString = deliverDate.format("dddd, MMMM D");
+
+      const dateString = calculateDeliveryDate(deliOption);
+
       const priceString =
         deliOption.priceCents === 0
           ? "Free"
