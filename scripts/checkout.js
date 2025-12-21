@@ -3,6 +3,7 @@ import {
   removeFromCart,
   calculateCartQuantity,
   updateQuantity,
+  updateDeliveryOption,
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -26,7 +27,7 @@ cart.forEach((cartItem) => {
   let deliverOption;
 
   deliveryOptions.forEach((option) => {
-    if(option.id === delioptionId){
+    if (option.id === delioptionId) {
       deliverOption = option;
     }
   });
@@ -100,13 +101,13 @@ function deliverOptionHtml(matchingProduct, cartItem) {
       deliOption.priceCents === 0
         ? "Free"
         : `${formatCurrency(deliOption.priceCents)}`;
-    
+
     const isChecked = deliOption.id === cartItem.deliveryOptionsId;
 
     html += `
-    <div class="delivery-option">
+    <div class="delivery-option js-delivery-options" data-product-id="${matchingProduct.id}" data-delivery-option-id="${deliOption.id}">
       <input type="radio"
-      ${isChecked ? 'checked' : ''}
+      ${isChecked ? "checked" : ""}
         class="delivery-option-input"
         name="delivery-option-${matchingProduct.id}">
       <div>
@@ -182,4 +183,11 @@ document.querySelectorAll(".js-quantity-input").forEach((input) => {
       saveLink.click();
     }
   });
+});
+
+document.querySelectorAll(".js-delivery-options").forEach((element) => {
+  element.addEventListener('click', ()=>{
+    const {productId, deliveryOptionId} = element.dataset
+    updateDeliveryOption(productId ,deliveryOptionId);
+  })
 });
