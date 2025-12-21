@@ -168,6 +168,7 @@ export function renderOrderSummary() {
       cartItemQuantity.innerHTML = newValue;
 
       calculateCartQuantity();
+      renderPaymentSummary();
     });
   });
 
