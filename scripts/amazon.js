@@ -88,7 +88,7 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
       `.added-message-${productId}`
     );
 
-    addtoCart(productId, selectorElement);
+    addtoCart(productId, selectorElement.value);
     showAddedText(addedTextElement);
     calculateCartQuantity();
   });
