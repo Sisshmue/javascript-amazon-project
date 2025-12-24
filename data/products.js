@@ -57,6 +57,25 @@ class Clothing extends Product {
   }
 }
 
+class Appliance extends Product{
+  instructionLink;
+  warrantyLink;
+
+  constructor(productDetail){
+    super(productDetail);
+    this.instructionLink = productDetail.instructionLink;
+    this.warrantyLink = productDetail.warrantyLink;
+  }
+
+  extraInfoHtml(){
+    return `
+    <a href="${this.instructionLink}" target="_blank"> Instruction </a>
+    <a href="${this.warrantyLink}" target="_blank"> Warranty </a>
+    `;
+  }
+
+}
+
 // const date = new Date();
 // console.log(date.toLocaleTimeString());
 
@@ -105,6 +124,9 @@ export const products = [
       count: 2197,
     },
     priceCents: 1899,
+    type : 'appliance',
+    instructionLink : 'images/appliance-instructions.png',
+    warrantyLink : 'images/appliance-warranty.png',
     keywords: ["toaster", "kitchen", "appliances"],
   },
   {
@@ -535,6 +557,10 @@ export const products = [
 
   if(productDetail.type === 'clothing'){
     return new Clothing(productDetail);
+  }
+
+  if(productDetail.type === 'appliance'){
+    return new Appliance(productDetail);
   }
 
   return new Product(productDetail);

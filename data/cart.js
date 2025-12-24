@@ -1,4 +1,6 @@
 import { deliveryOptions } from "./deliveryOptions.js";
+import './car.js';
+
 export let cart;
 loadFromStorage();
 
