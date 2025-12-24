@@ -53,7 +53,7 @@ describe("test suite : addToCart", () => {
   });
 });
 
-describe("test suite : remove from cart", () => {
+describe("test suite : removeFromCart", () => {
 
   beforeEach(()=>{
     spyOn(localStorage, "setItem");
@@ -88,3 +88,5 @@ describe("test suite : remove from cart", () => {
     expect(cart.length).toEqual(1);
   })
 });
+
+describe('test suit : updateDeliveryOption')
