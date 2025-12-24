@@ -1,4 +1,4 @@
-import { addtoCart, cart, loadFromStorage, removeFromCart } from "../../data/cart.js";
+import { addtoCart, cart, loadFromStorage, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
 
 describe("test suite : addToCart", () => {
   beforeEach(() => {
@@ -89,4 +89,32 @@ describe("test suite : removeFromCart", () => {
   })
 });
 
-describe('test suit : updateDeliveryOption')
+describe('test suit : updateDeliveryOption', ()=>{
+  beforeEach(()=>{
+    spyOn(localStorage, "setItem");
+
+    spyOn(localStorage, "getItem").and.callFake(() => {
+      return JSON.stringify([
+        {
+          productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+          quantity: 1,
+          deliveryOptionsId: "1",
+        },
+      ]);
+    });
+
+    loadFromStorage();
+
+  });
+  it('update the delivery option of a product in the cart', ()=>{
+    expect(cart.length).toEqual(1);
+    expect(cart[0].deliveryOptionsId).toEqual('1');
+    updateDeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c6','3');
+    expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+    expect(cart[0].deliveryOptionsId).toEqual('3');
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify(cart));
+
+    updateDeliveryOption('15b6fc6f-327a-4ec4-896f-486349e85a3d','3');
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+  })
+});
