@@ -1,4 +1,4 @@
-import { cart, addtoCart, calculateCartQuantity} from "../data/cart.js";
+import { cart} from "../data/cart-class.js";
 import { products } from "../data/products.js";
 import {formatCurrency} from "./utils/money.js";
 
@@ -88,10 +88,10 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
       `.added-message-${productId}`
     );
 
-    addtoCart(productId, selectorElement.value);
+    cart.addtoCart(productId, selectorElement.value);
     showAddedText(addedTextElement);
-    calculateCartQuantity();
+    cart.calculateCartQuantity();
   });
 });
 
-calculateCartQuantity();
+cart.calculateCartQuantity();
