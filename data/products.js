@@ -32,7 +32,28 @@ class Product {
   }
 
   getPrice() {
-    return `$${formatCurrency(this.priceCents)}`
+    return `$${formatCurrency(this.priceCents)}`;
+  }
+
+  extraInfoHtml(){
+    return '';
+  }
+}
+
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetail){
+    super(productDetail);
+    this.sizeChartLink = productDetail.sizeChartLink;
+  }
+
+  extraInfoHtml(){
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size Chart
+      </a>
+    `
   }
 }
 
@@ -508,5 +529,10 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productDetail) => {
+
+  if(productDetail.type === 'clothing'){
+    return new Clothing(productDetail);
+  }
+
   return new Product(productDetail);
 });
