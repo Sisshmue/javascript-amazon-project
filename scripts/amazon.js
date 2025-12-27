@@ -1,11 +1,14 @@
-import { cart} from "../data/cart-class.js";
-import { products } from "../data/products.js";
-import {formatCurrency} from "./utils/money.js";
+import { cart } from "../data/cart-class.js";
+import { products, loadProducts } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 
-let productsHTML = "";
+loadProducts(renderProductsGrid);
 
-products.forEach((product) => {
-  productsHTML += `
+function renderProductsGrid() {
+  let productsHTML = "";
+
+  products.forEach((product) => {
+    productsHTML += `
         <div class="product-container">
             <div class="product-image-container">
                 <img class="product-image"
@@ -58,40 +61,39 @@ products.forEach((product) => {
             Add to Cart
             </button>
         </div>`;
-});
-
-document.querySelector(".js-product-grid").innerHTML = productsHTML;
-
-let timerId;
-
-function showAddedText(addedTextElement) {
-  clearTimeout(timerId);
-
-  addedTextElement.classList.add("render-text");
-
-  timerId = setTimeout(() => {
-    addedTextElement.classList.remove("render-text");
-  }, 2000);
-}
-
-
-
-document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-  button.addEventListener("click", () => {
-    const { productId } = button.dataset;
-
-    const selectorElement = document.querySelector(
-      `.js-quantity-selector-${productId}`
-    );
-
-    const addedTextElement = document.querySelector(
-      `.added-message-${productId}`
-    );
-
-    cart.addtoCart(productId, selectorElement.value);
-    showAddedText(addedTextElement);
-    cart.calculateCartQuantity();
   });
-});
 
-cart.calculateCartQuantity();
+  document.querySelector(".js-product-grid").innerHTML = productsHTML;
+
+  let timerId;
+
+  function showAddedText(addedTextElement) {
+    clearTimeout(timerId);
+
+    addedTextElement.classList.add("render-text");
+
+    timerId = setTimeout(() => {
+      addedTextElement.classList.remove("render-text");
+    }, 2000);
+  }
+
+  document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const { productId } = button.dataset;
+
+      const selectorElement = document.querySelector(
+        `.js-quantity-selector-${productId}`
+      );
+
+      const addedTextElement = document.querySelector(
+        `.added-message-${productId}`
+      );
+
+      cart.addtoCart(productId, selectorElement.value);
+      showAddedText(addedTextElement);
+      cart.calculateCartQuantity();
+    });
+  });
+
+  cart.calculateCartQuantity();
+}
