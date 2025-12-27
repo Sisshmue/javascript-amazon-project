@@ -1,12 +1,19 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage } from "../../data/cart.js";
 import { cart } from "../../data/cart-class.js";
+import { loadProducts } from "../../data/products.js";
 
 describe("test suite : renderOrderSummary", () => {
   const id = "e43638ce-6aa0-4b85-b27f-e1d07eb678c6";
   const id2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
 
   const deliId = "3";
+
+  beforeAll((done)=>{
+    loadProducts(()=>{
+      done();
+    });
+  });
 
   beforeEach(() => {
     spyOn(localStorage, "setItem");
@@ -15,23 +22,6 @@ describe("test suite : renderOrderSummary", () => {
         <div class="js-order-summary"></div>
         <div class="js-payment-summary"></div>
         `;
-
-    // spyOn(localStorage, "getItem").and.callFake(() => {
-    //     return JSON.stringify([
-    //         {
-    //             productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    //             quantity: 2,
-    //             deliveryOptionsId: "1",
-    //           },
-    //           {
-    //             productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    //             quantity: 1,
-    //             deliveryOptionsId: "2",
-    //           },
-    //     ]);
-    //   });
-
-    //   loadFromStorage();
 
     cart.cartItems = [
       {
