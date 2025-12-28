@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+
+  <script>
+    const url = "https://supersimplebackend.dev";
+
+    // const xhr = new XMLHttpRequest();
+    // xhr.addEventListener('load', ()=>{
+    //     const response = xhr.response;
+    //     console.log(response);
+    // });
+    // xhr.open('GET', `${url}/greeting`);
+    // xhr.send();
+
+    // const promise = await fetch(`${url}/greeting`)
+    //     .then((response) => {
+    //       return response.text();
+    //     })
+    //     .then((greeting) => {
+    //       console.log(greeting);
+    //     });
+
+    // async function loadGreeting() {
+    //   await fetch(`${url}/greeting`).then(async (response) => {
+    //     const greetingResponse = await response.text();
+    //     console.log(greetingResponse);
+    //   });
+    // }
+
+    /*
+    async function loadGreeting() {
+      const response = await fetch(`${url}/greeting`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "Siss Hmue",
+        }),
+      });
+
+      const greetingMessage = await response.text();
+      console.log(greetingMessage);
+    }
+
+    loadGreeting();
+    */
+
+    /*
+    async function sendRequestToAmazon() {
+        try {
+            await fetch(`https://amazon.com`).then(async (response)=>{
+            const value = await response.json();
+            console.log(value);
+        });
+        } catch (error) {
+            console.log('CORS error. Your request is blocked by the backend.');
+        }
+
+    };
+
+    sendRequestToAmazon();
+    */
+
+    async function errorHandlingPost() {
+      try {
+        const response = await fetch(`${url}/greeting`, {
+          method: "POST",
+          headers: {
+            Content_type: "application/json",
+          },
+        });
+        if (response.status >= 400) {
+          throw response;
+        }
+      } catch (error) {
+        if(error.status >= 400){
+            errorResponse = await error.json();
+            console.log(errorResponse);
+        }else{
+            console.log('Network error, please try again later');
+        }
+      }
+    }
+
+    errorHandlingPost();
+  </script>
+</html>
