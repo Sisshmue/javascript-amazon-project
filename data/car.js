@@ -48,8 +48,6 @@ car1.brake();
 car2.go();
 car2.openTrunk();
 
-console.log(car1.displayInfo());
-console.log(car2.displayInfo());
 
 class RaceCar extends Car{
     acceleration = 0;
@@ -67,8 +65,4 @@ class RaceCar extends Car{
 }
 const raceCar = new RaceCar({brand : 'McLaren', model : "F1", acceleration : 20});
 
-console.log(raceCar.displayInfo());
-
 raceCar.go();
-
-console.log(raceCar.displayInfo());
