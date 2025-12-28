@@ -1,5 +1,5 @@
 import { deliveryOptions } from "./deliveryOptions.js";
-import './car.js';
+import "./car.js";
 
 export let cart;
 loadFromStorage();
@@ -94,32 +94,38 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   if (matchingItem) {
     let matchingDeliId;
-    deliveryOptions.forEach((deliItem)=>{
-      if(deliveryOptionId === deliItem.id){
+    deliveryOptions.forEach((deliItem) => {
+      if (deliveryOptionId === deliItem.id) {
         matchingDeliId = deliveryOptionId;
-      };
+      }
     });
 
-    if(matchingDeliId){
+    if (matchingDeliId) {
       matchingItem.deliveryOptionsId = deliveryOptionId;
       saveToStorage();
-    }else{
+    } else {
       return;
     }
-   
   } else {
     return;
   }
 }
 
-export function loadCart(fun){
+export async function loadCartFetch(fun) {
+  const response = await fetch("https://supersimplebackend.dev/cart");
+  const cart = await response.text();
+  console.log(cart);
+  fun();
+}
+
+export function loadCart(fun) {
   const xhr = new XMLHttpRequest();
 
-  xhr.addEventListener('load',()=>{
+  xhr.addEventListener("load", () => {
     console.log(xhr.response);
     fun();
   });
 
-  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
   xhr.send();
 }

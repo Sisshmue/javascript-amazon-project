@@ -9,10 +9,8 @@ describe("test suite : renderOrderSummary", () => {
 
   const deliId = "3";
 
-  beforeAll((done)=>{
-    loadProductsFetch().then(()=>{
-      done();
-    });
+  beforeAll(async ()=>{
+    await loadProductsFetch();
   });
 
   beforeEach(() => {
