@@ -5,7 +5,7 @@ import { cart } from "../data/cart-class.js";
 
 const orders = JSON.parse(localStorage.getItem("orders")) ?? [];
 
-function DateFormatter(date) {
+export function DateFormatter(date) {
   const day = dayjs(date);
   return day.format("MMMM DD");
 }
