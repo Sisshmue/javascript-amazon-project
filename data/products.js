@@ -587,9 +587,12 @@ export function loadProductsFetch() {
       });
 
       console.log("load products");
+    })
+    .catch((error) => {
+      console.log("Error : please try again later!");
     });
 
-    return promise;
+  return promise;
 }
 
 // loadProductsFetch().then(()=>{
@@ -611,9 +614,13 @@ export function loadProducts(fun) {
       return new Product(productDetail);
     });
 
-    console.log("load products");
+    console.log("load products!!");
 
     fun();
+  });
+
+  xhr.addEventListener("error", () => {
+    console.log("Error : please try again later!");
   });
 
   xhr.open("GET", "https://supersimplebackend.dev/products");
